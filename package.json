@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "d8corp.test",
+  "version": "0.0.0",
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}

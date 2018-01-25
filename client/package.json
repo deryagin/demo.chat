@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "chat.client",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "index.js",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
+  }
+}
