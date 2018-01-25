@@ -7,6 +7,7 @@
   "engines": {
     "npm": "6.*.*"
   },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",

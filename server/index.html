@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="styles.css">
+  <title>D8Corp.Test (Simple Chat Sample)</title>
+</head>
+
+<body>
+  <div class="content">
+    <div id="messages"></div>
+
+    <div class="sender">
+      <form id="publish">
+        <input class="text" type="text" name="message" />
+        <input class="button" type="submit" value="Send" />
+      </form>
+    </div>
+  </div>
+
+  <script>
+    publish.onsubmit = function () {
+      var value = this.elements.message.value.trim();
+      if (!value) {
+        return false;
+      }
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/send", true);
+      xhr.send(JSON.stringify({message: this.elements.message.value}));
+      this.elements.message.value = '';
+      return false;
+    };
+    subscribe();
+    function subscribe() {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/login", true);
+      xhr.onreadystatechange = function () {
+        if (this.readyState != 4) return;
+        if (this.status != 200) {
+          setTimeout(subscribe, 500);
+          return;
+        }
+
+        var messages = document.getElementById('messages');
+        var paragraph = document.createElement('p');
+        var text = document.createTextNode(this.responseText);
+        paragraph.className += ' message';
+        paragraph.appendChild(text);
+        messages.appendChild(paragraph);
+        subscribe();
+      };
+      xhr.send(null);
+    }
+  </script>
+</body>
+
+</html>
