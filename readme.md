@@ -23,11 +23,12 @@ Here will be node js developer test task. The task is to create a chat client an
 7. Technology stack: builtin WebSocket API (https://developer.mozilla.org/enUS/docs/Web/API/WebSocket), AngularJS (https://docs.angularjs.org/guide), JSHint (takesomeoneelse's.jshintrc).
 
 Todo:
-- Без username + страница чата + простая рассылка сообшений.
-- Логирование + валидация сообщений.
-- Landing page + username (в том числе и в чате) + проверка уникальности username.
-- Обработка SIGINT or SIGTERM
-- Логика реконнекта на клиенте и на сервере.
-- Добавить AngularJS на фронтенд.
-- Рефакторинг + Project's checklist.
-
+[x] Без username + страница чата + простая рассылка сообшений.
+[x] То же самое, но с использованием WS.
+[ ] Landing page + username (в том числе и в чате) + проверка уникальности username.
+[ ] Логирование + валидация сообщений.
+[ ] Обработка SIGINT or SIGTERM
+[ ] Логика реконнекта на клиенте и на сервере.
+[ ] Добавить AngularJS на фронтенд.
+[ ] Рефакторинг + Project's checklist.
+[ ] Добавить autoscroll + убрать вертикальную полосу прокрутки + разобраться с ward-wrap.

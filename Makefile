@@ -6,25 +6,13 @@ SHELL := /bin/bash
 dev.hello:
 	echo 'hello'
 
-.PHONY: dev.init
-dev.init:
-	make dev.install && make dev.setup
+.PHONY: dev.server.start
+dev.server.start:
+	nodemon -x 'node' server/server.js
 
-.PHONY: dev.install
-dev.install:
-	yarn install
-
-.PHONY: dev.setup
-dev.setup:
-	sh ./bin/db.setup.sh
-
-.PHONY: dev.start
-dev.start:
-	nodemon -x 'node' srv/server.js
-
-.PHONY: dev.debug
-dev.debug:
-	nodemon -x 'node --inspect' srv/server.js
+.PHONY: dev.server.debug
+dev.server.debug:
+	nodemon -x 'node --inspect' server/server.js
 
 .PHONY: dev.codelint
 dev.codelint:

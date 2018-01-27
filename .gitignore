@@ -1,1 +1,6 @@
-.ignorepaths
+node_modules
+*.sw[nop]
+.vscode
+.idea
+tmp
+log
