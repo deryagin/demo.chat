@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <base href="/">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>D8Corp.Test (Simple Chat Sample)</title>
   <link rel="stylesheet" href="index.css">
-  <title>D8Corp.Test Login (Simple Chat Sample)</title>
+  <link rel="stylesheet" href="login/login.css">
+  <link rel="stylesheet" href="chat/chat.css">
 </head>
-<body>
-  <div class="login-container">
-    <div class="error-message"></div>
 
-    <form id="connect-form">
-      <input type="text" name="nickname" placeholder="enter your nickname here" maxlength="10"/>
-      <input type="submit" value="Connect" />
-    </form>
+<body>
+  <div data-ng-app="chatApp">
+    <div data-ng-view></div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-resource.min.js"></script>
+
+  <script src="login/login.js"></script>
+  <script src="chat/chat.js"></script>
   <script src="index.js"></script>
 </body>
+
 </html>

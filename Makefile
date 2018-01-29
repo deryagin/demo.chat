@@ -24,7 +24,7 @@ dev.server.debug:
 
 .PHONY: dev.client.start
 dev.client.start:
-	yarn run http-server ./client -p 8080 --cors='localhost'
+	yarn run http-server -c-1 -p 8080 --cors='localhost' ./client
 
 .PHONY: prod.install
 prod.install:
