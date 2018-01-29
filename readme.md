@@ -25,6 +25,7 @@ Here will be node js developer test task. The task is to create a chat client an
 Todo:
 [x] Без username + страница чата + простая рассылка сообшений.
 [x] То же самое, но с использованием WS.
+[x] Добавить AngularJS.
 [ ] Landing page + username (в том числе и в чате) + проверка уникальности username.
 [ ] Логирование + валидация сообщений.
 [ ] Обработка SIGINT or SIGTERM

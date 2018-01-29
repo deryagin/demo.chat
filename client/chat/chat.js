@@ -1,4 +1,4 @@
-(function(angular) {
+(function chatModule(angular) {
 
   var chat = angular.module('chat', []);
   chat.controller('ChatController', ChatController)

@@ -1,4 +1,4 @@
-(function (angular) {
+(function loginModule(angular) {
 
   var login = angular.module('login', []);
   login.controller('LoginController', LoginController);
