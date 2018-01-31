@@ -35,11 +35,11 @@
 }
 
 .new-message-form__text {
-  width: calc(100% - 66px)
+  width: calc(100% - 94px)
 }
 
-.new-message-form__button {
+/* .new-message-form__send {
   position: relative;
   width: 60px;
   right: 0;
-}
+} */

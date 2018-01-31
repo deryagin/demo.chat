@@ -3,7 +3,8 @@
   var chat = angular.module('chat', []);
   chat.controller('ChatController', ChatController)
 
-  function ChatController($scope) {
+  function ChatController($rootScope, $scope) {
+    console.log('chatcontroller');
     var ws = new WebSocket('ws://localhost:3000');
 
     ws.onopen = function onOpen() {

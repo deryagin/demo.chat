@@ -1,42 +1,60 @@
 (function loginModule(angular) {
 
   var login = angular.module('login', []);
+
   login.controller('LoginController', LoginController);
 
-  function LoginController() {
+  function LoginController($rootScope, $scope, $http, $location) {
 
-    var connectForm = document.getElementById('connect-form');
+    var SERVER_URL = 'http://localhost:3000';
 
-    connectForm.onsubmit = function () {
-      var value = this.elements.nickname.value.trim();
-      if (value) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/send", true);
-        xhr.send(JSON.stringify({message: this.elements.message.value}));
-        this.elements.message.value = '';
+    var NICKNAME_REGEXP = /^[a-zA-Z0-9]{3,10}$/;
+
+    var INVALID_NICKNAME = 'Invalid "nickname". Must have a-z, A-Z, 0-9.';
+
+    $scope.nickname = '';
+
+    $scope.maxLength = 10;
+
+    $scope.errorMessage = '';
+
+    $scope.warnMessage = '';
+
+    $scope.isRequesting = false;
+
+    $scope.connect = connect;
+
+    function connect() {
+      $scope.nickname = $scope.nickname.trim();
+      if (!$scope.nickname || !NICKNAME_REGEXP.test($scope.nickname)) {
+        $scope.errorMessage = INVALID_NICKNAME;
+        return false;
       }
+
+      $scope.errorMessage = '';
+      $scope.warnMessage = '';
+      $scope.isRequesting = true;
+      makeRequest();
       return false;
-    };
-    subscribe();
-    function subscribe() {
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "/login", true);
-      xhr.onreadystatechange = function () {
-        if (this.readyState != 4) return;
-        if (this.status != 200) {
-          setTimeout(subscribe, 500);
-          return;
+    }
+
+    function makeRequest() {
+      $http({
+        method: 'GET',
+        url: SERVER_URL + '/login?nickname=' + encodeURI($scope.nickname),
+      }).then(
+        function onSuccess(response) {
+          $rootScope.nickname = $scope.nickname;
+          $location.path('/chat');
+        },
+        function onError(response) {
+          console.log(response);
         }
-        var messages = document.getElementById('messages');
-        var paragraph = document.createElement('p');
-        var text = document.createTextNode(this.responseText);
-        paragraph.className += ' message';
-        paragraph.appendChild(text);
-        messages.appendChild(paragraph);
-        subscribe();
-      };
-      xhr.send(null);
+      ).finally(
+        function atFinally() {
+          $scope.isRequesting = false;
+        }
+      );
     }
   }
-
 })(angular);

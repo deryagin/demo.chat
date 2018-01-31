@@ -16,10 +16,6 @@ dev.install:
 
 .PHONY: dev.server.start
 dev.server.start:
-	yarn run nodemon -x 'node' server/server.js
-
-.PHONY: dev.server.debug
-dev.server.debug:
 	yarn run nodemon -x 'node --inspect' server/server.js
 
 .PHONY: dev.server.codelint

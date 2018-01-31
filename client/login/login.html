@@ -1,10 +1,11 @@
 <div class="login-container">
-  <div class="error-message"></div>
-
-  <form id="connect-form">
-    <input type="text" name="nickname" placeholder="enter your nickname here" maxlength="10" />
-    <input type="submit" value="Connect" />
+  <form ng-submit="connect()" class="connect-container">
+    <input type="text" ng-model="nickname" maxlength={{maxLength}} placeholder="enter your nickname here" />
+    <input type="submit" ng-disabled="isRequesting" value="Connect" />
   </form>
-</div>
 
-<!-- <script src="index.js"></script> -->
+  <div class="notify-container">
+    <span id="error-message" ng-show="errorMessage">{{errorMessage}}</span>
+    <span id="warn-message" ng-show="warnMessage">{{warnMessage}}</span>
+  </div>
+</div>

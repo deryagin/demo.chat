@@ -9,7 +9,7 @@ html, body {
   box-sizing: border-box;
 }
 
-[data-ng-app], [data-ng-view] {
+[ng-app], [ng-view] {
   height: 100%;
   width: 100%;
 }

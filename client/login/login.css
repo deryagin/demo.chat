@@ -1,0 +1,30 @@
+.login-container {
+  height: 100px;
+  width: 300px;
+  margin: auto;
+  position: relative;
+  top: 40px;
+  border: 2px solid burlywood;
+  background-color: beige;
+}
+
+.connect-container {
+  width: fit-content;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.notify-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#error-message {
+  color: red;
+  font-size: 10pt;
+}
+
+#warn-message {
+  color: yellow;
+  font-size: 10pt;
+}
