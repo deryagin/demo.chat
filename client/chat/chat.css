@@ -22,7 +22,21 @@
 
 .message-in-chat {
   margin: 4px;
+  font-family: 12pt sans-serif;
   word-wrap: break-word;
+}
+
+.message-in-chat__time {
+  color: coral;
+}
+
+.message-in-chat__text {
+  word-wrap: break-word;
+}
+
+.message-in-chat__nickname {
+  color: chocolate;
+  font-weight: bold;
 }
 
 #new-message-form {

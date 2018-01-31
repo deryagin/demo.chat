@@ -9,13 +9,18 @@ const httpServer = http.createServer(app);
 const wsServer = new ws.Server({server: httpServer});
 
 wsServer.on('connection', (ws) => {
-  ws.on('message', (message) => {
-    console.log(`ws message: ${message}`);
-    wsServer.clients.forEach((client) => {
-      if (client.readyState === ws.OPEN) {
-        client.send(message);
-      }
-    });
+  ws.on('message', (json) => {
+    console.log(`ws message: ${json}`, typeof json);
+    let message = JSON.parse(json);
+    if (message.text) {
+      wsServer.clients.forEach((client) => {
+        if (client.readyState === ws.OPEN) {
+          message.nickname = 'vasya';
+          message.time = new Date().toLocaleString();
+          client.send(JSON.stringify(message));
+        }
+      });
+    }
   });
 });
 

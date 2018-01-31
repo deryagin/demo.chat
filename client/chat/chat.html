@@ -1,12 +1,24 @@
 <!-- <div ng-controller="ChatController as chat" class="chat-container"> -->
 <div class="chat-container">
   <div class="messages-container">
-    <ul id="message-list"></ul>
+    <ul id="message-list">
+      <li class="message-in-chat" ng-repeat="message in messageList">
+        <span class="message-in-chat__time">{{message.time}}</span>
+        <span class="message-in-chat__nickname">{{message.nickname}}: </span>
+        <span class="message-in-chat__text">{{message.text}}</span>
+      </li>
+    </ul>
   </div>
 
-  <form id="new-message-form">
-    <input class="new-message-form__text" type="text" name="message" />
-    <input class="new-message-form__send" type="submit" value="Send" />
-    <input class="new-message-form__exit" type="submit" value="Exit" />
+  <form ng-submit="sendMessage()" id="new-message-form">
+    <input
+      type="text"
+      ng-model="typedText"
+      class="new-message-form__text"
+      maxlength="maxLength"
+      placeholder="type your message here"
+    />
+    <input class="new-message-form__send" type="submit" value="Send" ng-disabled="!typedText"/>
+    <input class="new-message-form__exit" type="button" value="Exit" ng-click="chatExit()"/>
   </form>
 </div>

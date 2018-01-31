@@ -1,7 +1,7 @@
 <div class="login-container">
   <form ng-submit="connect()" class="connect-container">
     <input type="text" ng-model="nickname" maxlength={{maxLength}} placeholder="enter your nickname here" />
-    <input type="submit" ng-disabled="isRequesting" value="Connect" />
+    <input type="submit" ng-disabled="isRequesting || !nickname" value="Connect" />
   </form>
 
   <div class="notify-container">
