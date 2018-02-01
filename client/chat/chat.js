@@ -3,7 +3,7 @@
   var chat = angular.module('chat', []);
   chat.controller('ChatController', ChatController)
 
-  function ChatController($rootScope, $scope) {
+  function ChatController($rootScope, $scope, $location) {
 
     console.log('chatcontroller');
 
@@ -56,7 +56,9 @@
     }
 
     function chatExit() {
-
+      ws.close();
+      $rootScope.user = undefined;
+      $location.path('/login');
     }
   }
 

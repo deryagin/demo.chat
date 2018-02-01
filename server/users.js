@@ -8,7 +8,7 @@ module.exports = {
       id: uuidv4(),
       entity: 'User',
       nickname: nickname,
-      connectedAt: new Date(),
+      registeredAt: new Date(),
     };
     this._users.push(newcomer);
     return newcomer;
