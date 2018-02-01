@@ -5,10 +5,5 @@
   "workspaces": [
     "client",
     "server"
-  ],
-  "scripts": {
-    "dev.install": "make dev.install",
-    "dev.server.start": "make dev.server.start",
-    "dev.client.start": "make dev.client.start"
-  }
+  ]
 }
