@@ -49,7 +49,10 @@
       console.log('sendMessage');
       $scope.typedText = $scope.typedText.trim();
       if ($scope.typedText) {
-        ws.send(JSON.stringify({text: $scope.typedText}));
+        ws.send(JSON.stringify({
+          entity: 'message',
+          text: $scope.typedText
+        }));
         $scope.typedText= '';
       }
       return false;

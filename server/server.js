@@ -1,7 +1,9 @@
+const _ = require('lodash');
 const http = require('http');
 const url = require('url');
 const uuidv4 = require('uuid/v4');
 const ws = require('ws');
+const logger = require('./logger');
 const app = require('./app');
 const errors = require('./errors');
 const users = require('./users');
@@ -18,29 +20,36 @@ wsServer.on('connection', (ws, req) => {
 
   const user = users.byId(userId);
   if (user) {
-    connections.push({
+    const conn = {
+      entity: 'connection',
       userId: userId,
       socket: ws,
       connectedAt: new Date(),
-    });
+    };
+    connections.push(conn);
+    logger.info({data: _.pick(conn, ['entity', 'userId', 'connectedAt'])});
     const message = {
       // todo: think through entities, theirs types, schemas, validation and sharing all of these between clients and server
+      id: uuidv4(),
       entity: 'message',
       type: 'system.user.connected',
       text: `${user.nickname} joined.`,
-      UTC: new Date().toISOString(),
+      time: new Date().toISOString(),
     };
+
     connections.forEach((conn) => conn.socket.send(JSON.stringify(message)));
+    logger.debug({data: message});
 
     ws.on('message', (json) => {
-      console.log(`ws message: ${json}`, typeof json);
       let message = JSON.parse(json);
       if (message.text) {
         wsServer.clients.forEach((client) => {
           if (client.readyState === ws.OPEN) {
+            message.id = uuidv4();
+            message.time = new Date().toISOString();
             message.nickname = user.nickname;
-            message.UTC = new Date().toISOString();
             client.send(JSON.stringify(message));
+            logger.debug({data: message});
           }
         });
       }
@@ -52,12 +61,13 @@ wsServer.on('connection', (ws, req) => {
         entity: 'message',
         type: 'system.user.left.chat',
         text: `${user.nickname} left the chat, connection lost.`,
-        UTC: new Date().toISOString(),
+        time: new Date().toISOString(),
         user: user,
       };
       const index = connections.findIndex((conn) => conn.socket === ws);
       connections.splice(index, 1);
       connections.forEach((conn) => conn.socket.send(JSON.stringify(message)));
+      logger.info({data: message});
     });
   }
 });
@@ -75,7 +85,7 @@ setInterval(() => {
         entity: 'message',
         type: 'system.user.disconnected.due.inactivity',
         text: `${user.nickname} was disconnected due to inactivity.`,
-        UTC: new Date().toISOString(),
+        time: new Date().toISOString(),
         user: user,
       };
       connections.splice(index, 1).pop();

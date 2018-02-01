@@ -36,7 +36,7 @@ function loginChat(query, res) {
 
   return res.end(JSON.stringify({
     id: 'd9a53225-57e7-4e94-bed2-ed8dcfd91357',
-    UTC: new Date().toISOString(),
+    time: new Date().toISOString(),
     entity: 'message',
     type: 'system.error',
     data: {
