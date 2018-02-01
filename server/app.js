@@ -1,5 +1,6 @@
 // const fs = require('fs');
 const url = require('url');
+const users = require('./users');
 
 function application(req, res) {
   const urlParsed = url.parse(req.url, true);
@@ -27,9 +28,24 @@ function loginChat(query, res) {
   // todo: add nickname validation, add json-api format
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify({
-    nickname: query.nickname,
-  }));
+
+  if (query.nickname && !users.byNickname(query.nickname)) {
+    let newcomer = users.add(query.nickname);
+    return res.end(JSON.stringify(newcomer));
+  }
+
+  return res.end(JSON.stringify({
+    id: 'd9a53225-57e7-4e94-bed2-ed8dcfd91357',
+    UTC: new Date().toISOString(),
+    entity: 'message',
+    type: 'system.error',
+    data: {
+      code: '123123',
+      message: `Failed to connect. Nickname "${query.nickname}" already taken.`,
+    }
+  }))
+
+  // todo: error handling
 }
 
 // function sendFile(fileName, res) {

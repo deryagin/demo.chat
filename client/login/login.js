@@ -44,7 +44,9 @@
         url: SERVER_URL + '/login?nickname=' + encodeURI($scope.nickname),
       }).then(
         function onSuccess(response) {
-          $rootScope.nickname = $scope.nickname;
+          // todo: make $rootScope[chat] var and use it to store chat globals
+          console.log(response);
+          $rootScope.user = response.data;
           $location.path('/chat');
         },
         function onError(response) {

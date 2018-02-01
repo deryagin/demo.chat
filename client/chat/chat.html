@@ -2,8 +2,8 @@
 <div class="chat-container">
   <div class="messages-container">
     <ul id="message-list">
-      <li class="message-in-chat" ng-repeat="message in messageList">
-        <span class="message-in-chat__time">{{message.time}}</span>
+      <li class="message-in-chat" ng-repeat="message in (messageList | orderBy:'UTC')">
+        <span class="message-in-chat__time">{{message.UTC | date:'yyyy-MM-dd HH:mm:ss'}}</span>
         <span class="message-in-chat__nickname">{{message.nickname}}: </span>
         <span class="message-in-chat__text">{{message.text}}</span>
       </li>

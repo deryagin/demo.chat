@@ -17,6 +17,7 @@ module.exports = {
     'indent': ['error', 2, {'SwitchCase': 1}],
     'max-len': ['error', {'ignoreUrls': true, 'code': 120}],
     'no-shadow': ['off'],
+    'no-underscore-dangle': ["error", {"allowAfterThis": true}],
     'no-use-before-define': ['off'],
     'object-curly-spacing': ['error', 'never'],
     'object-shorthand': ['off'],

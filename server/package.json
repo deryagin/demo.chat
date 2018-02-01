@@ -8,6 +8,7 @@
     "npm": "6.*.*"
   },
   "dependencies": {
+    "uuid": "^3.2.1",
     "ws": "^4.0.0"
   },
   "devDependencies": {

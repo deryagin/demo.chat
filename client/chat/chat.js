@@ -17,7 +17,8 @@
 
     $scope.chatExit = chatExit;
 
-    var ws = new WebSocket('ws://localhost:3000');
+    console.log('ws://localhost:3000?userId=' + $rootScope.user.id);
+    var ws = new WebSocket('ws://localhost:3000?userId=' + $rootScope.user.id);
 
     ws.onopen = function onOpen() {
       console.log('open');
@@ -30,7 +31,9 @@
       // todo: message validation
       if (message) {
         $scope.messageList.push(message);
-        $scope.$apply(); // same problem: https://stackoverflow.com/q/12304728/6229438
+
+        // the same problem: https://stackoverflow.com/q/12304728/6229438
+        $scope.$apply();
       }
     };
 
