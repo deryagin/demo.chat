@@ -4,8 +4,7 @@
     <input type="submit" ng-disabled="isRequesting || !nickname" value="Connect" />
   </form>
 
-  <div class="notify-container">
-    <span id="error-message" ng-show="errorMessage">{{errorMessage}}</span>
-    <span id="warn-message" ng-show="warnMessage">{{warnMessage}}</span>
+  <div class="notify-container" ng-class="notificationClass">
+    <span ng-show="notificationText">{{notificationText}}</span>
   </div>
 </div>

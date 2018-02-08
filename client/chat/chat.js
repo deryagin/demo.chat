@@ -7,6 +7,16 @@
 
     console.log('chatcontroller');
 
+    var CLOSE_MESSAGE_DUE_INACTIVITY = 'Connection was closed due to inactivity';
+
+    // todo: вынести настройку ws в фабрику/сервис
+    var ws = null;
+
+    var connectionTimeouts = {
+      1: 3000,
+      2: 5000
+    };
+
     $scope.typedText= '';
 
     $scope.maxLength = 150;
@@ -17,33 +27,59 @@
 
     $scope.chatExit = chatExit;
 
-    console.log('ws://localhost:3000?userId=' + $rootScope.user.id);
-    var ws = new WebSocket('ws://localhost:3000?userId=' + $rootScope.user.id);
+    tryConnect(1);
 
-    ws.onopen = function onOpen() {
-      console.log('open');
-    };
-
-    ws.onmessage = function onMessage(event) {
-      console.log('message', event);
-      var message = JSON.parse(event.data);
-
-      // todo: message validation
-      if (message) {
-        $scope.messageList.push(message);
-
-        // the same problem: https://stackoverflow.com/q/12304728/6229438
+    function tryConnect(attemptNumber) {
+      var maxAttempts = Object.keys(connectionTimeouts).length;
+      if (attemptNumber > maxAttempts) {
+        $rootScope.user = undefined;
+        $location.path('/login');
         $scope.$apply();
+        return;
       }
-    };
 
-    ws.onclose = function onClose() {
-      console.log('close');
-    };
+      if (!ws || ws.readyState !== WebSocket.OPEN) {
+        ws = new WebSocket('ws://localhost:3000?userId=' + $rootScope.user.id);
+        setupWebsocket(ws);
 
-    ws.onerror = function onError() {
-      console.log('error');
-    };
+        setTimeout(function () {
+          tryConnect(attemptNumber + 1);
+        }, connectionTimeouts[attemptNumber]);
+      }
+    }
+
+    function setupWebsocket(ws) {
+      ws.onopen = function onOpen() {
+        console.log('open');
+      };
+
+      ws.onmessage = function onMessage(event) {
+        console.log('message', event);
+        var message = JSON.parse(event.data);
+
+        // todo: message validation
+        if (message) {
+          $scope.messageList.push(message);
+          $scope.$apply();
+        }
+      };
+
+      ws.onclose = function onClose(closeEvent) {
+        console.log('close', closeEvent);
+        var CLOSE_CODE_DUE_INACTIVITY = 4000;
+        if (closeEvent.code === CLOSE_CODE_DUE_INACTIVITY) {
+          $rootScope.notificationClass = 'info-notification';
+          $rootScope.notificationText = closeEvent.reason || CLOSE_MESSAGE_DUE_INACTIVITY;
+        }
+        $rootScope.user = undefined;
+        $location.path('/login');
+        $scope.$apply();
+      };
+
+      ws.onerror = function onError() {
+        console.log('error');
+      };
+    }
 
     function sendMessage() {
       console.log('sendMessage');
@@ -59,7 +95,10 @@
     }
 
     function chatExit() {
-      ws.close();
+      // todo: share the codes with the server
+      // see server/websocket/WSCloseEvents.js
+      var CLOSE_CODE_NORMAL = 1000;
+      ws.close(CLOSE_CODE_NORMAL);
       $rootScope.user = undefined;
       $location.path('/login');
     }

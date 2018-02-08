@@ -12,51 +12,77 @@
 
     var INVALID_NICKNAME = 'Invalid "nickname". Must have a-z, A-Z, 0-9.';
 
+    var DEFAULT_ERROR_MSG = 'Failed to connect.';
+
+    var MALFORMED_REQUEST = 'Malformed request.';
+
+    var SERVER_UNAVAILABLE = 'Chat server is unavailable';
+
     $scope.nickname = '';
 
     $scope.maxLength = 10;
 
-    $scope.errorMessage = '';
+    $scope.notificationClass = $rootScope.notificationClass || '';
 
-    $scope.warnMessage = '';
+    $scope.notificationText = $rootScope.notificationText || '';
 
     $scope.isRequesting = false;
 
     $scope.connect = connect;
 
     function connect() {
+      resetNitifications();
+
       $scope.nickname = $scope.nickname.trim();
       if (!$scope.nickname || !NICKNAME_REGEXP.test($scope.nickname)) {
-        $scope.errorMessage = INVALID_NICKNAME;
+        $scope.notificationClass = 'error-notification';
+        $scope.notificationText = INVALID_NICKNAME;
         return false;
       }
 
-      $scope.errorMessage = '';
-      $scope.warnMessage = '';
       $scope.isRequesting = true;
       makeRequest();
       return false;
     }
 
     function makeRequest() {
+      // todo: переделать на POST
       $http({
         method: 'GET',
-        url: SERVER_URL + '/login?nickname=' + encodeURI($scope.nickname),
+        url: SERVER_URL + '/login?nickname=' + encodeURI($scope.nickname)
       }).then(
         function onSuccess(response) {
-          // todo: make $rootScope[chat] var and use it to store chat globals
-          console.log(response);
           $rootScope.user = response.data;
           $location.path('/chat');
+          console.log($rootScope.user);
         },
         function onError(response) {
-          console.log(response);
-        }
-      ).finally(
-        function atFinally() {
+          resetNitifications();
           $scope.isRequesting = false;
+
+          if (response.status === -1) {
+            $scope.notificationClass = 'error-notification';
+            $scope.notificationText = SERVER_UNAVAILABLE;
+            return;
+          }
+
+          if (response.status === 400) {
+            $scope.notificationClass = 'error-notification';
+            $scope.notificationText = (response.data.message || MALFORMED_REQUEST);
+            return;
+          }
+
+          $scope.notificationClass = 'error-notification';
+          $scope.notificationText = DEFAULT_ERROR_MSG;
         }
       );
+    }
+
+    function resetNitifications() {
+      $rootScope.notificationClass = '';
+      $rootScope.notificationText = '';
+      $scope.notificationClass = '';
+      $scope.notificationText = '';
     }
   }
 })(angular);

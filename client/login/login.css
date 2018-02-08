@@ -19,12 +19,12 @@
   margin-top: 10px;
 }
 
-#error-message {
+.error-notification {
   color: red;
   font-size: 10pt;
 }
 
-#warn-message {
-  color: yellow;
+.info-notification {
+  color: green;
   font-size: 10pt;
 }
