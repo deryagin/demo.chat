@@ -3,18 +3,20 @@ const url = require('url');
 const uuidv4 = require('uuid/v4');
 const WebSocket = require('ws');
 const WSClose = require('./websocket/WSCloseEvents');
+const shutdown = require('./shutdown');
 const logger = require('./logger');
-const app = require('./app');
-const errors = require('./errors');
 const users = require('./users');
-
-errors.configure();
+const app = require('./app');
 
 const httpServer = http.createServer(app);
 const wsServer = new WebSocket.Server({
   server: httpServer,
   maxPayload: 2048,
 });
+
+process.on('uncaughtException', logger.error.bind(logger));
+process.once('SIGTERM', shutdown(httpServer));
+process.once('SIGINT', shutdown(httpServer));
 
 // todo: think through entities, theirs types, schemas, validation and sharing all of these between clients and server
 wsServer.on('connection', (ws, req) => {
@@ -162,9 +164,9 @@ function checkActivity() {
   });
 }
 
-module.exports.httpServer = httpServer;
-module.exports.wsServer = wsServer;
-
 if (!module.parent) {
   httpServer.listen(3000, '127.0.0.1');
 }
+
+module.exports.httpServer = httpServer;
+module.exports.wsServer = wsServer;

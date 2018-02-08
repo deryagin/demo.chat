@@ -10,7 +10,7 @@ Here will be node js developer test task. The task is to create a chat client an
 4. Doesn't allow multiple users with the same nickname.
 ????5. Validates data received over the network.
 6. Has logging.
-???7. Terminates gracefully upon receiving SIGINT or SIGTERM signals.
+7. Terminates gracefully upon receiving SIGINT or SIGTERM signals.
 8. Technology stack: Node.js ( https://nodejs.org/dist/latestv6.x/docs/api/), ws (https://github.com/websockets/ws),Bunyan (https://github.com/trentm/nodebunyan), JSHint (copytheattached.jshintrcfileinto project root).
 
 ## Client
@@ -29,7 +29,7 @@ Todo:
 [x] Landing page + username (в том числе и в чате) + проверка уникальности username.
 [x] Логирование
 [x] Логика реконнекта на клиенте и на сервере.
-[ ] Обработка SIGINT or SIGTERM
+[x] Обработка SIGINT or SIGTERM
 [ ] Валидация сообщений.
 [ ] Рефакторинг + Project's checklist, удалить debug-code.
 [ ] Добавить autoscroll + убрать вертикальную и горизонтальную полосы прокрутки.
