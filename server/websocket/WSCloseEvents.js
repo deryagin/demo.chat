@@ -58,7 +58,7 @@ module.exports = {
   },
 
   // some custom codes:
-  DUE_INACTIVITY: {
+  DUE_USER_INACTIVITY: {
     CODE: 4000,
     DESC: 'Connection was closed due to inactivity'
   }

@@ -7,7 +7,9 @@
 
     console.log('chatcontroller');
 
-    var CLOSE_MESSAGE_DUE_INACTIVITY = 'Connection was closed due to inactivity';
+    var CLOSE_DUE_INACTIVITY_MESSAGE = 'Connection was closed due to inactivity';
+
+    var SERVER_UNAVAILABLE_MESSAGE = 'Chat server is unavailable';
 
     // todo: вынести настройку ws в фабрику/сервис
     var ws = null;
@@ -66,11 +68,18 @@
 
       ws.onclose = function onClose(closeEvent) {
         console.log('close', closeEvent);
-        var CLOSE_CODE_DUE_INACTIVITY = 4000;
-        if (closeEvent.code === CLOSE_CODE_DUE_INACTIVITY) {
-          $rootScope.notificationClass = 'info-notification';
-          $rootScope.notificationText = closeEvent.reason || CLOSE_MESSAGE_DUE_INACTIVITY;
+        var ABNORMAL_CLOSE_CODE = 1006;
+        if (closeEvent.code === ABNORMAL_CLOSE_CODE) {
+          $rootScope.notificationClass = 'error-notification';
+          $rootScope.notificationText = closeEvent.reason || SERVER_UNAVAILABLE_MESSAGE;
         }
+
+        var DUE_USER_INACTIVITY_CLOSE_CODE = 4000;
+        if (closeEvent.code === DUE_USER_INACTIVITY_CLOSE_CODE) {
+          $rootScope.notificationClass = 'info-notification';
+          $rootScope.notificationText = closeEvent.reason || CLOSE_DUE_INACTIVITY_MESSAGE;
+        }
+
         $rootScope.user = undefined;
         $location.path('/login');
         $scope.$apply();

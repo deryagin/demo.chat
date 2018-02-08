@@ -11,7 +11,7 @@ Here will be node js developer test task. The task is to create a chat client an
 ????5. Validates data received over the network.
 6. Has logging.
 7. Terminates gracefully upon receiving SIGINT or SIGTERM signals.
-8. Technology stack: Node.js ( https://nodejs.org/dist/latestv6.x/docs/api/), ws (https://github.com/websockets/ws),Bunyan (https://github.com/trentm/nodebunyan), JSHint (copytheattached.jshintrcfileinto project root).
+8. Technology stack: Node.js ( https://nodejs.org/dist/latestv6.x/docs/api/), ws (https://github.com/websockets/ws), Bunyan (https://github.com/trentm/nodebunyan), JSHint (copytheattached.jshintrcfileinto project root).
 
 ## Client
 1. Has two pages  landing page (shown when not connected to the server) and chat (shown only when connected to the server).

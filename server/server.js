@@ -86,7 +86,7 @@ wsServer.on('connection', (ws, req) => {
       });
     }
 
-    if (code === WSClose.DUE_INACTIVITY.CODE) {
+    if (code === WSClose.DUE_USER_INACTIVITY.CODE) {
       logger.info({
         event: 'termination',
         data: user.public(),
@@ -159,7 +159,7 @@ function checkActivity() {
     const now = new Date();
     const timeout = (now - user.lastActivityAt);
     if (ACTIVITY_TIMEOUT < timeout) {
-      user.socket.close(WSClose.DUE_INACTIVITY.CODE);
+      user.socket.close(WSClose.DUE_USER_INACTIVITY.CODE);
     }
   });
 }
