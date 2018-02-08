@@ -41,27 +41,13 @@ module.exports = {
           'lastActivityAt',
         ]);
       },
-      // send(message) {
-      //   if (this.socket.readyState === this.socket.OPEN) {
-      //     this.socket.send(JSON.stringify(message));
-      //     logger.debug({
-      //       event: 'message',
-      //       data: message,
-      //     });
-      //   }
-      // },
     };
     this._users.push(newcomer);
     return newcomer;
   },
 
-  // срабатывает и при checkActiviry и при onclose????
   remove(userId) {
     const user = this.byId(userId);
-    // if (user && user.socket) {
-    //   user.socket.close();
-    // }
-
     const index = this._users.indexOf(user);
     if (index > -1) {
       this._users.splice(index, 1);
