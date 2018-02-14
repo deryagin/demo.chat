@@ -12,7 +12,7 @@ dev.install:
 
 .PHONY: dev.start
 dev.start:
-	yarn run http-server -c-1 -p 8080 --cors='localhost' ./
+	yarn run http-server -c-1 -p 8080 --cors='localhost' ./pub
 
 .PHONY: dev.codelint
 dev.codelint:
