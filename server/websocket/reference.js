@@ -1,7 +1,7 @@
 // inspired of: https://github.com/theturtle32/WebSocket-Node/blob/0713ded3214231d34ca9b6f94fe8483e70b6a1e9/lib/WebSocketConnection.js#L155
 // see also: https://www.iana.org/assignments/websocket/websocket.xml#close-code-number
 
-module.exports = {
+module.exports.WSClose = {
 
   // all standard codes:
   NORMAL: {

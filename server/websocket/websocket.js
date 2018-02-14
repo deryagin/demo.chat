@@ -1,15 +1,16 @@
 const url = require('url');
 const uuidv4 = require('uuid/v4');
 const WebSocket = require('ws');
-const WSClose = require('./WSCloseEvents');
+const config = require('../config');
+const WSClose = require('./reference').WSClose;
 const users = require('../users');
 const logger = require('../logger');
 
 
-module.exports.create = function create(httpServer) {
+module.exports.createServer = function createServer(httpServer) {
   const wsServer = new WebSocket.Server({
     server: httpServer,
-    maxPayload: 2048,
+    maxPayload: config.get('wsServer:maxPayload'),
   });
 
   // todo: think through entities, theirs types, schemas, validation and sharing all of these between clients and server
@@ -31,7 +32,6 @@ module.exports.create = function create(httpServer) {
     user.connectedAt = new Date();
     user.lastActivityAt = new Date();
 
-    // todo: extract to standard log-objects
     logger.info({
       event: 'connection',
       data: user.public(),
@@ -46,7 +46,6 @@ module.exports.create = function create(httpServer) {
     });
 
     user.socket.on('message', (json) => {
-      // todo: try/catch + socket.close(WSClose.INVALID_DATA.CODE)
       let message = JSON.parse(json);
       logger.debug({
         event: 'message',

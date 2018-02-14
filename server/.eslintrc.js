@@ -22,6 +22,6 @@ module.exports = {
     'object-curly-spacing': ['error', 'never'],
     'object-shorthand': ['off'],
     'prefer-const': ['off'],
-    'yoda': ['error', 'always', {'exceptRange': true, 'onlyEquality': true}],
+    'yoda': ['warn', 'never', {'exceptRange': true, 'onlyEquality': true}],
   }
 };
