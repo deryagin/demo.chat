@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
-const logger = require('./logger');
+const logger = require('../utility/logger');
 
 // todo: may be to use Set or such.
 module.exports = {

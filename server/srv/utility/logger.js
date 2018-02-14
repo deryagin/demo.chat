@@ -1,5 +1,5 @@
 const bunyan = require('bunyan');
-const config = require('./config');
+const config = require('../config');
 
 module.exports = bunyan.createLogger({
   name: 'D8.Test',

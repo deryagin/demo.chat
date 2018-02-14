@@ -3,8 +3,8 @@ const uuidv4 = require('uuid/v4');
 const WebSocket = require('ws');
 const config = require('../config');
 const WSClose = require('./reference').WSClose;
-const users = require('../users');
-const logger = require('../logger');
+const users = require('../entity/users');
+const logger = require('../utility/logger');
 
 
 module.exports.createServer = function createServer(httpServer) {

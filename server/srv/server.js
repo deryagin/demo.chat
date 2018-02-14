@@ -1,9 +1,9 @@
 const http = require('http');
+const config = require('./config');
 const websocket = require('./websocket/websocket');
 const periodics = require('./websocket/periodics');
-const shutdown = require('./shutdown');
-const config = require('./config');
-const logger = require('./logger');
+const shutdown = require('./utility/shutdown');
+const logger = require('./utility/logger');
 const app = require('./app');
 
 const httpServer = http.createServer(app);

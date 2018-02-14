@@ -1,7 +1,7 @@
 // const fs = require('fs');
 const _ = require('lodash');
 const url = require('url');
-const users = require('./users');
+const users = require('./entity/users');
 
 function application(req, res) {
   const urlParsed = url.parse(req.url, true);

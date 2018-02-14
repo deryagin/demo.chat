@@ -3,9 +3,14 @@
   "name": "chat.server",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "index.js",
+  "main": "srv/server.js",
   "engines": {
     "npm": "6.*.*"
+  },
+  "scripts": {
+    "dev.install": "make dev.install",
+    "dev.start": "make dev.start",
+    "dev.debug": "make dev.debug"
   },
   "dependencies": {
     "bunyan": "^1.8.12",

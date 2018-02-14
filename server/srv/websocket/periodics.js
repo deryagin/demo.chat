@@ -1,5 +1,5 @@
 const config = require('../config');
-const users = require('../users');
+const users = require('../entity/users');
 const WSClose = require('./reference').WSClose;
 
 function runCheckAlive() {
