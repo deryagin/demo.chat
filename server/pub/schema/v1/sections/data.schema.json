@@ -1,0 +1,21 @@
+{
+  "$id": "/schema/v1/sections/data.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "The 'data' schema must contain one of payloads/* messages.",
+  "type": "object",
+  "required": ["type"],
+  "minProperties": 2,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "LoginRequest",
+        "LoginResponse",
+        "ClientConnected",
+        "ClientDisconnected",
+        "ChatMessage",
+        "ChatEvent"
+      ]
+    }
+  }
+}

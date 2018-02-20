@@ -1,0 +1,10 @@
+{
+  "$id": "/schema/v1/payloads/LoginResponse.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "LoginResponse message schema is sent in response to LoginRequest message.",
+  "type": "object",
+  "required": ["type"],
+  "properties": {
+    "type": {"type": "string", "const": "LoginResponse"}
+  }
+}

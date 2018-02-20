@@ -7,7 +7,7 @@ const users = require('../entity/users');
 const logger = require('../utility/logger');
 
 
-module.exports.createServer = function createServer(httpServer) {
+function createServer(httpServer) {
   const wsServer = new WebSocket.Server({
     server: httpServer,
     maxPayload: config.get('wsServer:maxPayload'),
@@ -122,4 +122,8 @@ module.exports.createServer = function createServer(httpServer) {
   });
 
   return wsServer;
+};
+
+module.exports = {
+  createServer,
 };

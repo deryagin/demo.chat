@@ -13,6 +13,7 @@
     "dev.debug": "make dev.debug"
   },
   "dependencies": {
+    "ajv": "^6.1.1",
     "bunyan": "^1.8.12",
     "lodash": "^4.17.4",
     "nconf": "^0.10.0",

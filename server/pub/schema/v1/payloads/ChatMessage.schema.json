@@ -1,0 +1,12 @@
+{
+  "$id": "/schema/v1/payloads/ChatMessage.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Any chat message has given from a client.",
+  "type": "object",
+  "required": ["type", "text"],
+  "properties": {
+    "type": {"type": "string", "const": "ChatMessage"},
+    "text": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

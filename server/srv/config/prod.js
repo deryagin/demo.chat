@@ -1,6 +1,7 @@
 module.exports = {
-  application: {
+  app: {
     env: 'production',
+    pwd: process.env.PWD,
   },
   httpServer: {
     host: '127.0.0.1',

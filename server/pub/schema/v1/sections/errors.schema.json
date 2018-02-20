@@ -1,0 +1,10 @@
+{
+  "$id": "/schema/v1/sections/error.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "A schema for 'error' property of a message if present.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "minItems": 1
+  }
+}

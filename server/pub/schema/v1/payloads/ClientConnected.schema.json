@@ -1,0 +1,10 @@
+{
+  "$id": "/schema/v1/payloads/ClientConnected.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "ClientConnected message schema.",
+  "type": "object",
+  "required": ["type"],
+  "properties": {
+    "type": {"type": "string", "const": "ClientMessage"}
+  }
+}

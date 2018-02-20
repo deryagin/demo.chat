@@ -1,0 +1,10 @@
+{
+  "$id": "/schema/v1/payloads/ClientDisconnected.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "ClientDisconnected message schema.",
+  "type": "object",
+  "required": ["type"],
+  "properties": {
+    "type": {"type": "string", "const": "ClientMessage"}
+  }
+}
