@@ -18,6 +18,7 @@ module.exports = {
     interval: 30 * 1000, // 30 seconds
   },
   bunyan: {
+    name: 'Chat.Interview.Test',
     level: 'info',
     src: true,
   },

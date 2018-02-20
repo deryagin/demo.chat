@@ -2,9 +2,10 @@ const url = require('url');
 const uuidv4 = require('uuid/v4');
 const WebSocket = require('ws');
 const config = require('../config');
-const WSClose = require('./reference').WSClose;
 const users = require('../entity/users');
-const logger = require('../utility/logger');
+const logger = require('../tools/logger');
+const handlers = require('./handlers');
+const periodics = require('./periodics');
 
 
 function createServer(httpServer) {
@@ -13,17 +14,16 @@ function createServer(httpServer) {
     maxPayload: config.get('wsServer:maxPayload'),
   });
 
-  // todo: think through entities, theirs types, schemas, validation and sharing all of these between clients and server
+  periodics.runCheckAlive().unref();
+  periodics.runCheckInactivity().unref();
+
   wsServer.on('connection', (ws, req) => {
     const urlParsed = url.parse(req.url, true);
     const userId = urlParsed.query.userId;
     const user = users.byId(userId);
 
     if (!user) {
-      logger.warn({
-        event: 'connection',
-        data: `Invalid userId=${userId} parameter.`,
-      });
+      logger.userUnknown(userId);
       return ws.close();
     }
 
@@ -32,97 +32,24 @@ function createServer(httpServer) {
     user.connectedAt = new Date();
     user.lastActivityAt = new Date();
 
-    logger.info({
-      event: 'connection',
-      data: user.public(),
-    });
+    user.socket.on('message', handlers.onMessage.bind(null, user));
+    user.socket.on('close', handlers.onClose.bind(null, user));
+    user.socket.on('error', handlers.onError);
+    user.socket.on('pong', handlers.onPong.bind(null, user));
+
+    logger.userConnected(user.public());
 
     // todo: extract ro standard broadcast-messages
     users.broadcast({
       id: uuidv4(),
-      type: 'message',
+      event: 'user:connected',
       text: `${user.nickname} joined the chat.`,
       time: new Date().toISOString(),
-    });
-
-    user.socket.on('message', (json) => {
-      let message = JSON.parse(json);
-      logger.debug({
-        event: 'message',
-        data: message,
-      });
-
-      if (message.text) {
-        message.id = uuidv4();
-        message.time = new Date().toISOString();
-        message.nickname = user.nickname;
-        users.broadcast(message);
-        user.lastActivityAt = new Date();
-      }
-    });
-
-    user.socket.on('close', (code) => {
-      users.remove(user.id);
-
-      if (code === WSClose.NORMAL.CODE) {
-        logger.info({
-          event: 'disconnection',
-          data: user.public(),
-        });
-
-        return users.broadcast({
-          id: uuidv4(),
-          entity: 'message',
-          type: 'system.user.left.chat',
-          text: `${user.nickname} left the chat.`,
-          time: new Date().toISOString(),
-        });
-      }
-
-      if (code === WSClose.DUE_USER_INACTIVITY.CODE) {
-        logger.info({
-          event: 'termination',
-          data: user.public(),
-        });
-
-        return users.broadcast({
-          id: uuidv4(),
-          entity: 'message',
-          type: 'system.user.left.chat',
-          text: `${user.nickname} was disconnected due to inactivity.`,
-          time: new Date().toISOString(),
-        });
-      }
-
-      // WSClose.GOING_AWAY.CODE and other cases
-      logger.info({
-        event: 'disconnection',
-        data: user.public(),
-      });
-
-      users.broadcast({
-        id: uuidv4(),
-        entity: 'message',
-        type: 'system.user.left.chat',
-        text: `${user.nickname} left the chat, connection lost.`,
-        time: new Date().toISOString(),
-      });
-    });
-
-    user.socket.on('error', (...args) => {
-      logger.error({
-        event: 'error',
-        data: args,
-      });
-    });
-
-    user.socket.on('pong', () => {
-      user.isAlive = true;
     });
   });
 
   return wsServer;
-};
+}
 
 module.exports = {
   createServer,

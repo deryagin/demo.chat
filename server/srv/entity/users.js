@@ -1,9 +1,10 @@
 const _ = require('lodash');
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
-const logger = require('../utility/logger');
+const logger = require('../tools/logger');
 
 // todo: may be to use Set or such.
+// todo: module.exports = {create, collection}; separate a user and a user collection
 module.exports = {
   _users: [],
 
@@ -17,10 +18,7 @@ module.exports = {
         user.socket.send(JSON.stringify(message));
       }
     });
-    logger.debug({
-      event: 'broadcast',
-      data: message,
-    });
+    logger.chatBroadcast(message);
   },
 
   add(nickname) {
