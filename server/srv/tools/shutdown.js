@@ -1,20 +1,34 @@
-// this module does a graceful server shutdown
+// this module does a graceful and emergency server shutdown
 
+const config = require('../config');
+const users = require('../entity/users');
+const messages = require('../entity/messages');
 const logger = require('./logger');
 
-module.exports = (httpServer) => {
+function gracefully(httpServer) {
   return function shutdown() {
-    httpServer.close(() => {
-      // todo: set maximum timeout
-      // users.broadcast({
-      //   id: uuidv4(),
-      //   type: 'message',
-      //   text: 'Chat server was shutted down',
-      //   time: new Date().toISOString(),
-      // });
+    httpServer.close();
 
-      logger.httpShutdown();
-      process.exit(0);
-    });
+    const message = messages.serverRebooted();
+    users.broadcast(message);
+
+    users.forEach((user) => (user.socket ? user.socket.close() : undefined));
+    logger.httpShutdown();
+
+    const timeout = config.get('httpServer:shutdownTimeout');
+    setTimeout(() => process.exit(), timeout);
   };
+}
+
+function emergency(httpServer) {
+  return function onUncaughtException(error) {
+    const shutdown = gracefully(httpServer);
+    logger.uncaughtException(error);
+    shutdown();
+  };
+}
+
+module.exports = {
+  gracefully,
+  emergency,
 };

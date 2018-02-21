@@ -13,7 +13,8 @@
         "LoginResponse",
         "ClientConnected",
         "ClientDisconnected",
-        "ChatMessage"
+        "ChatMessage",
+        "ServerRebooted"
       ]
     }
   }

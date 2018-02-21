@@ -34,13 +34,13 @@ function onMessage(user, json) {
   const message = converter.decode(json);
   if (message.errors) {
     // user.socket.send({ }); // json errors
-    return logger.messageMalformed(json, message.errors);
+    return logger.messageMalformed(json);
   }
 
   const errors = validator.check(message);
   if (errors) {
     // user.socket.send({ }); // protocol errors
-    return logger.messageMalformed(json, errors);
+    return logger.messageMalformed(json);
   }
 
   users.broadcast(message.text, user.nickname);

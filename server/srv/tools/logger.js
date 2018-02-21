@@ -10,13 +10,6 @@ const logger = bunyan.createLogger({
   src: config.get('bunyan:src'),
 });
 
-function uncaughtException(error) {
-  logger.error({
-    event: 'process:uncaughtException',
-    data: error,
-  });
-}
-
 function httpRunning(httpServer) {
   logger.info({
     event: 'http:running',
@@ -24,7 +17,22 @@ function httpRunning(httpServer) {
       host: httpServer.address().address,
       port: httpServer.address().port,
       pid: process.pid,
+      title: process.title,
+      heapTotal: process.memoryUsage().heapTotal,
+      heapUsed: process.memoryUsage().heapUsed,
+      external: process.memoryUsage().external,
     }
+  });
+}
+
+function uncaughtException(error) {
+  logger.error({
+    event: 'process:uncaughtException',
+    data: JSON.stringify({
+      code: error.code,
+      message: error.message,
+      stack: error.stack,
+    }),
   });
 }
 
@@ -84,10 +92,10 @@ function messageReceived(message) {
   });
 }
 
-function messageMalformed(json, errors) {
+function messageMalformed(json) {
   logger.debug({
     event: 'message:malformed',
-    data: {json, errors},
+    data: json,
   });
 }
 

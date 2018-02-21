@@ -46,10 +46,19 @@ function clientGone(nickname) {
   };
 }
 
+function serverRebooted() {
+  return {
+    type: 'ServerRebooted',
+    time: new Date().toISOString(),
+    text: 'Chat server is rebooting. Please, try to connect later.',
+  };
+}
+
 module.exports = {
   clientConnected,
   clientDisconnected,
   clientInactivated,
   clientGone,
   chatMessage,
+  serverRebooted,
 };

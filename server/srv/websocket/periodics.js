@@ -29,10 +29,13 @@ function runCheckInactivity() {
   const INACTIVITY_INTERVAL = config.get('checkInactivity:interval');
   const checkInactivity = () => {
     users.forEach((user) => {
-      const now = new Date();
-      const timeout = (now - user.lastActivityAt);
-      if (INACTIVITY_TIMEOUT < timeout) {
-        user.socket.close(WSClose.DUE_USER_INACTIVITY.CODE);
+      const currentTimeout = (new Date() - user.lastActivityAt);
+      if (INACTIVITY_TIMEOUT < currentTimeout) {
+        if (user.socket) {
+          user.socket.close(WSClose.DUE_USER_INACTIVITY.CODE);
+        } else {
+          users.remove(user.id);
+        }
       }
     });
   };

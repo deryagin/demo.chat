@@ -7,6 +7,7 @@ module.exports = {
   httpServer: {
     host: '127.0.0.1',
     port: 3000,
+    shutdownTimeout: 30 * 1000, // 30 seconds
   },
   wsServer: {
     maxPayload: 2048,

@@ -8,9 +8,9 @@ const app = require('./app');
 const httpServer = http.createServer(app);
 const wsServer = websocket.createServer(httpServer);
 
-process.on('uncaughtException', logger.uncaughtException);
-process.once('SIGTERM', shutdown(httpServer));
-process.once('SIGINT', shutdown(httpServer));
+process.once('uncaughtException', shutdown.emergency(httpServer));
+process.once('SIGTERM', shutdown.gracefully(httpServer));
+process.once('SIGINT', shutdown.gracefully(httpServer));
 
 if (!module.parent) {
   const PORT = config.get('httpServer:port');

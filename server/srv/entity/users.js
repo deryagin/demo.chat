@@ -21,7 +21,7 @@ module.exports = {
     if (config.get('app:validateOutput')) {
       const errors = validator.check(encodedMessage);
       if (errors) {
-        return logger.messageMalformed(encodedMessage, errors);
+        return logger.messageMalformed(encodedMessage);
       }
     }
 
