@@ -1,3 +1,6 @@
+// this module checks messages (incomming and outcomming)
+// using json-schemas from pub/schema/v1/
+
 const Ajv = require('ajv');
 const config = require('../config');
 
@@ -8,8 +11,8 @@ const ajv = new Ajv({
   schemas: [
     require(`${pwd}/pub/schema/v1/chat.schema.json`),
     require(`${pwd}/pub/schema/v1/sections/data.schema.json`),
-    require(`${pwd}/pub/schema/v1/sections/errors.schema.json`),
     require(`${pwd}/pub/schema/v1/sections/meta.schema.json`),
+    require(`${pwd}/pub/schema/v1/payloads/ValidationErrors.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/LoginRequest.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/LoginResponse.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/ClientConnected.schema.json`),
@@ -18,14 +21,7 @@ const ajv = new Ajv({
   ]
 });
 
-function checkMessage(json) {
-  try {
-    var message = JSON.parse(json);
-  } catch (exp) {
-    const errorMessage = exp.message || 'Malformed JSON message.';
-    return [{message: errorMessage}];
-  }
-
+function check(message) {
   const validateRoot = ajv.getSchema('/schema/v1/chat.schema.json');
   validateRoot(message);
   if (validateRoot.errors) {
@@ -40,5 +36,5 @@ function checkMessage(json) {
 };
 
 module.exports = {
-  checkMessage,
+  check,
 };

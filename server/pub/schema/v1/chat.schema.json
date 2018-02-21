@@ -6,8 +6,7 @@
   "required": ["meta", "data"],
   "properties": {
     "meta": {"$ref": "/schema/v1/sections/meta.schema.json"},
-    "data": {"$ref": "/schema/v1/sections/data.schema.json"},
-    "errors": {"$ref": "/schema/v1/sections/error.schema.json"}
+    "data": {"$ref": "/schema/v1/sections/data.schema.json"}
   },
   "additionalProperties": false
 }

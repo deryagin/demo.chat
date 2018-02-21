@@ -1,0 +1,16 @@
+{
+  "$id": "/schema/v1/payloads/Errors.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Array of errors.",
+  "properties": {
+    "type": {"type": "string", "const": "ValidationErrors"},
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "minItems": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

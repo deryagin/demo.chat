@@ -1,6 +1,9 @@
 const _ = require('lodash');
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
+const config = require('../config');
+const converter = require('../tools/converter');
+const validator = require('../tools/validator');
 const logger = require('../tools/logger');
 
 // todo: may be to use Set or such.
@@ -12,13 +15,22 @@ module.exports = {
     return this._users.forEach(callback);
   },
 
+  // todo: extract from here
   broadcast(message) {
+    const encodedMessage = converter.encode(message);
+    if (config.get('app:validateOutput')) {
+      const errors = validator.check(encodedMessage);
+      if (errors) {
+        return logger.messageMalformed(encodedMessage, errors);
+      }
+    }
+
     this._users.forEach((user) => {
       if (user.socket && user.socket.readyState === WebSocket.OPEN) {
-        user.socket.send(JSON.stringify(message));
+        user.socket.send(encodedMessage);
       }
     });
-    logger.chatBroadcast(message);
+    logger.messageBroadcasted(message);
   },
 
   add(nickname) {

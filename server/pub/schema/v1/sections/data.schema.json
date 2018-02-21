@@ -4,17 +4,16 @@
   "description": "The 'data' schema must contain one of payloads/* messages.",
   "type": "object",
   "required": ["type"],
-  "minProperties": 2,
   "properties": {
     "type": {
       "type": "string",
       "enum": [
+        "ValidationErrors",
         "LoginRequest",
         "LoginResponse",
         "ClientConnected",
         "ClientDisconnected",
-        "ChatMessage",
-        "ChatEvent"
+        "ChatMessage"
       ]
     }
   }

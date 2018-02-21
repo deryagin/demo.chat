@@ -1,16 +1,16 @@
 {
   "$id": "/schema/v1/payloads/ChatEvent.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
-  "description": "Any chat event.",
+  "description": "Any chat event. TODO: need to decide use or don't such format?",
   "type": "object",
   "required": ["type", "event", "nickname"],
   "properties": {
     "type": {"type": "string", "const": "ChatEvent"},
     "event": {"type": "string", "enum": [
-      "user:connected",
-      "user:disconnected",
-      "user:inactivated",
-      "user:gone"
+      "client:connected",
+      "client:disconnected",
+      "client:inactivated",
+      "client:gone"
     ]},
     "nickname": {"type": "string", "minLength": 1},
     "text": {"type": "string"}

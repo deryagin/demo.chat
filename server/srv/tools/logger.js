@@ -1,3 +1,6 @@
+// this module contains standard logger messages
+// it's made to purge business logic from an infrastructure
+
 const bunyan = require('bunyan');
 const config = require('../config');
 
@@ -7,10 +10,10 @@ const logger = bunyan.createLogger({
   src: config.get('bunyan:src'),
 });
 
-function uncaughtException(...args) {
+function uncaughtException(error) {
   logger.error({
     event: 'process:uncaughtException',
-    data: args,
+    data: error,
   });
 }
 
@@ -39,51 +42,58 @@ function httpShutdown() {
   });
 }
 
-function userUnknown(userId) {
+function clientUnknown(userId) {
   logger.warn({
     event: 'user:unknown',
     data: {userId},
   });
 }
 
-function userConnected(user) {
+function clientConnected(user) {
   logger.info({
-    event: 'user:connected',
+    event: 'client:connected',
     data: user,
   });
 }
 
-function userDisconnected(user) {
+function clientDisconnected(user) {
   logger.info({
-    event: 'user:disconnected',
+    event: 'client:disconnected',
     data: user,
   });
 }
 
-function userInactivated(user) {
+function clientInactivated(user) {
   logger.info({
-    event: 'user:inactivated',
+    event: 'client:inactivated',
     data: user,
   });
 }
 
-function userGone(user) {
+function clientGone(user) {
   logger.info({
-    event: 'user:gone',
+    event: 'client:gone',
     data: user,
   });
 }
 
-function chatMessage(message) {
+function messageReceived(message) {
   logger.debug({
-    event: 'chat:message',
+    event: 'message:received',
     data: message,
   });
 }
 
-function chatBroadcast(message) {
+function messageMalformed(json, errors) {
   logger.debug({
-    event: 'chat:broadcast',
+    event: 'message:malformed',
+    data: {json, errors},
+  });
+}
+
+function messageBroadcasted(message) {
+  logger.debug({
+    event: 'message:broadcasted',
     data: message,
   });
 }
@@ -99,12 +109,13 @@ module.exports = {
   uncaughtException,
   httpRunning,
   httpShutdown,
-  userUnknown,
-  userConnected,
-  userDisconnected,
-  userInactivated,
-  userGone,
-  chatMessage,
-  chatBroadcast,
+  clientUnknown,
+  clientConnected,
+  clientDisconnected,
+  clientInactivated,
+  clientGone,
+  messageReceived,
+  messageMalformed,
+  messageBroadcasted,
   websocketError,
 };

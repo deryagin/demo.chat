@@ -1,11 +1,11 @@
 {
-  "$id": "/schema/v1/payloads/ClientDisconnected.schema.json",
+  "$id": "/schema/v1/payloads/ClientInactivated.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
-  "description": "ClientDisconnected message schema.",
+  "description": "ClientInactivated message schema.",
   "type": "object",
   "required": ["type", "nickname"],
   "properties": {
-    "type": {"type": "string", "const": "ClientDisconnected"},
+    "type": {"type": "string", "const": "ClientInactivated"},
     "nickname": {"type": "string", "minLength": 1},
     "text": {"type": "string"}
   }

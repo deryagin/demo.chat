@@ -1,5 +1,5 @@
-// const uuidv4 = require('uuid/v4');
-// const users = require('./users');
+// this module does a graceful server shutdown
+
 const logger = require('./logger');
 
 module.exports = (httpServer) => {

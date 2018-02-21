@@ -1,20 +1,50 @@
-const uuidv4 = require('uuid/v4');
 const users = require('../entity/users');
+const messages = require('../entity/messages');
+const converter = require('../tools/converter');
+const validator = require('../tools/validator');
 const logger = require('../tools/logger');
 const WSClose = require('./reference').WSClose;
 
-function onMessage(user, json) {
-  // todo: validate here
-  let message = JSON.parse(json);
-  logger.chatMessage(message);
+function onConnection(ws, req) {
+  const urlParsed = url.parse(req.url, true);
+  const userId = urlParsed.query.userId;
+  const user = users.byId(userId);
 
-  if (message.text) {
-    message.id = uuidv4();
-    message.time = new Date().toISOString();
-    message.nickname = user.nickname;
-    users.broadcast(message);
-    user.lastActivityAt = new Date();
+  if (!user) {
+    logger.clientUnknown(userId);
+    return ws.close();
   }
+
+  user.socket = ws;
+  user.isAlive = true;
+  user.connectedAt = new Date();
+  user.lastActivityAt = new Date();
+
+  user.socket.on('message', onMessage.bind(null, user));
+  user.socket.on('close', onClose.bind(null, user));
+  user.socket.on('error', onError);
+  user.socket.on('pong', onPong.bind(null, user));
+
+  const message = messages.clientConnected(user.nickname);
+  users.broadcast(message);
+  logger.clientConnected(user.public());
+}
+
+function onMessage(user, json) {
+  const message = converter.decode(json);
+  if (message.errors) {
+    // user.socket.send({ }); // json errors
+    return logger.messageMalformed(json, message.errors);
+  }
+
+  const errors = validator.check(message);
+  if (errors) {
+    // user.socket.send({ }); // protocol errors
+    return logger.messageMalformed(json, errors);
+  }
+
+  users.broadcast(message.text, user.nickname);
+  user.lastActivityAt = new Date();
 }
 
 function onClose(user, closeCode) {
@@ -22,37 +52,22 @@ function onClose(user, closeCode) {
 
   // a user pressed 'exit' button in the chat
   if (closeCode === WSClose.NORMAL.CODE) {
-    logger.userDisconnected(user.public());
-    return users.broadcast({
-      id: uuidv4(),
-      type: 'event',
-      event: 'user:disconnected',
-      text: `${user.nickname} left the chat.`,
-      time: new Date().toISOString(),
-    });
+    const message = messages.clientDisconnected(user.nickname);
+    users.broadcast(message);
+    logger.clientDisconnected(user.public());
   }
 
   // a user was disconnected by the server
   if (closeCode === WSClose.DUE_USER_INACTIVITY.CODE) {
-    logger.userInactivated(user.public());
-    return users.broadcast({
-      id: uuidv4(),
-      type: 'event',
-      event: 'user:inactivated',
-      text: `${user.nickname} was disconnected due to inactivity.`,
-      time: new Date().toISOString(),
-    });
+    const message = messages.clientInactivated(user.nickname)
+    users.broadcast(message);
+    logger.clientInactivated(user.public());
   }
 
   // a user closed a browser and such
-  logger.userGone(user.public());
-  users.broadcast({
-    id: uuidv4(),
-    type: 'event',
-    event: 'user:gone',
-    text: `${user.nickname} left the chat, connection lost.`,
-    time: new Date().toISOString(),
-  });
+  const message = messages.clientGone(user.nickname);
+  users.broadcast(message);
+  logger.clientGone(user.public());
 }
 
 function onError(...args) {
@@ -64,6 +79,7 @@ function onPong(user) {
 }
 
 module.exports = {
+  onConnection,
   onMessage,
   onClose,
   onError,

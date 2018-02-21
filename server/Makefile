@@ -16,7 +16,7 @@ dev.start:
 
 .PHONY: dev.debug
 dev.debug:
-	yarn run -s nodemon -x 'node --inspect' ./srv/server.js --config=./srv/config/devel.js | yarn run -s bunyan -o short
+	yarn run -s nodemon -x 'node --inspect' ./srv/server.js --config=./srv/config/devel.js | yarn run -s bunyan -o long
 
 .PHONY: dev.codelint
 dev.codelint:
