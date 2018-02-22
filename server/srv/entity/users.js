@@ -66,10 +66,10 @@ module.exports = {
   },
 
   byId(userId) {
-    return this._users.find((user) => user.id === userId)
+    return this._users.find((user) => user.id === userId);
   },
 
   byNickname(nickname) {
-    return this._users.find((user) => user.nickname === nickname)
+    return this._users.find((user) => user.nickname === nickname);
   },
 };

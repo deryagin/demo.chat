@@ -32,7 +32,6 @@ function loginChat(query, res) {
     code: 'NICKNAME_ALREADY_TAKEN',
     message: `Failed to connect. Nickname "${query.nickname}" already taken.`,
   }));
-
 }
 
 module.exports = application;

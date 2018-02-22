@@ -21,7 +21,7 @@ function httpRunning(httpServer) {
       heapTotal: process.memoryUsage().heapTotal,
       heapUsed: process.memoryUsage().heapUsed,
       external: process.memoryUsage().external,
-    }
+    },
   });
 }
 

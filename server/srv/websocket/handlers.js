@@ -61,7 +61,7 @@ function onClose(user, closeCode) {
 
   // a user was disconnected by the server
   if (closeCode === WSClose.DUE_USER_INACTIVITY.CODE) {
-    const message = messages.clientInactivated(user.nickname)
+    const message = messages.clientInactivated(user.nickname);
     users.broadcast(message);
     return logger.clientInactivated(user.public());
   }

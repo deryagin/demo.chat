@@ -16,7 +16,7 @@
 
     var connectionTimeouts = {
       1: 3000,
-      2: 5000
+      2: 5000,
     };
 
     $scope.typedText= '';
@@ -96,7 +96,7 @@
       if ($scope.typedText) {
         var message = {
           type: 'ChatMessage',
-          text: $scope.typedText
+          text: $scope.typedText,
         };
         ws.send(encode(message, $rootScope.user.id));
         $scope.typedText= '';

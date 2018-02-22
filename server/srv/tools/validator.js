@@ -19,7 +19,7 @@ const ajv = new Ajv({
     require(`${pwd}/pub/schema/v1/payloads/ClientDisconnected.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/ClientGone.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/ChatMessage.schema.json`),
-  ]
+  ],
 });
 
 function checkFull(message) {
