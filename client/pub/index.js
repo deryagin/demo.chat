@@ -12,11 +12,11 @@
     $routeProvider
       .when('/login', {
         controller: 'LoginController',
-        templateUrl: 'login/login.html',
+        templateUrl: 'module/login/login.html',
       })
       .when('/chat', {
         controller: 'ChatController',
-        templateUrl: 'chat/chat.html',
+        templateUrl: 'module/chat/chat.html',
       })
       .otherwise({
         redirectTo: '/login',
