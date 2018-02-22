@@ -3,12 +3,33 @@
 
 Here will be node js developer test task. The task is to create a chat client and server application. Create separate projects for server and client, and submit your solution as GitHub repository links. Detailed requirements follow.
 
+## Install & Run
+
+1. First we need to install dependencies:
+```bash
+  git clone git@github.com:deryagin/demo.chat.git
+  cd demo.chat
+  yarn install
+```
+
+2. Next, run http-server to serve client static html/css/js/ico files:
+```bash
+  cd demo.chat/client
+  make dev.start
+```
+
+3. Finally, run the http/websocket server (in another terminal):
+```bash
+  cd demo.chat/server
+  make dev.start # or make dev.debug
+```
+
 ## Server
 1. Broadcasts incoming messages to all connected clients (no rooms).
 2. If a client is silent for more than a certain (configurable) amount of time, it is disconnected; a message about the event (e.g. "John was disconnected due to inactivity") is sent to all connected clients.
 3. If a client is disconnected, but not due to inactivity, a different message is sent (e.g. "John left the chat, connection lost" instead.
 4. Doesn't allow multiple users with the same nickname.
-????5. Validates data received over the network.
+5. Validates data received over the network.
 6. Has logging.
 7. Add opportunity to give a config file using cli options (e.g. node ./server.js --config=cfg/devel.js).
 8. Terminates gracefully upon receiving SIGINT or SIGTERM signals.

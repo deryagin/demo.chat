@@ -1,5 +1,5 @@
 // these are messages parts that correspond one of
-// pub/schema/v1/payloads schemas
+// pub/schema/v1/payloads/* schemas
 
 function clientRegistered(user) {
   return {

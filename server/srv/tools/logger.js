@@ -1,5 +1,5 @@
 // this module contains standard logger messages
-// it's made to purge business logic from an infrastructure
+// it's made to better separate business logic and supporting code
 
 const bunyan = require('bunyan');
 const config = require('../config');
