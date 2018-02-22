@@ -40,3 +40,4 @@ Todo:
 [ ] Maybe instead of 'type: ClientConnected' it'll be better to use the path to corresponding schema? Or just use schema field?
 [ ] Add ServerError.schema.json
 [ ] Add general definitions like id, user, time and such to defs.schema.json
+[ ] Share general code like converter.js between client/server using share folder.

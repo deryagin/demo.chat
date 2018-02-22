@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "chat.client",
+  "name": "demo.chat.client",
   "version": "0.0.0",
   "license": "MIT",
   "main": "./pub/index.html",

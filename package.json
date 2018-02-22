@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "d8corp.test",
-  "version": "0.0.0",
+  "name": "demo.chat",
+  "version": "0.0.1",
   "workspaces": [
     "client",
     "server"

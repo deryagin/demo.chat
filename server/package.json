@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "chat.server",
+  "name": "demo.chat.server",
   "version": "0.0.0",
   "license": "MIT",
   "main": "srv/server.js",
