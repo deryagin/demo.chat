@@ -1,0 +1,13 @@
+{
+  "$id": "/schema/v1/payloads/ClientRegistered.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "ClientRegistered message schema is sent in response to LoginRequest message.",
+  "type": "object",
+  "required": ["type"],
+  "properties": {
+    "type": {"type": "string", "const": "ClientRegistered"},
+    "time": {"type": "string"},
+    "desc": {"type": "string"},
+    "user": {"type": "object"}
+  }
+}

@@ -36,3 +36,7 @@ Todo:
 [ ] Добавить autoscroll + убрать вертикальную и горизонтальную полосы прокрутки.
 [ ] Добавить в server/Makefile для make prod.start запуск через pm2/forever.
 [ ] How to reduce the number of the payload/* files? And how to use one phase validation in validator.js?
+[ ] Maybe instead of 'text' field it'll be better to user 'desc' field?
+[ ] Maybe instead of 'type: ClientConnected' it'll be better to use the path to corresponding schema? Or just use schema field?
+[ ] Add ServerError.schema.json
+[ ] Add general definitions like id, user, time and such to defs.schema.json

@@ -1,6 +1,15 @@
 // these are messages parts that correspond one of
 // pub/schema/v1/payloads schemas
 
+function clientRegistered(user) {
+  return {
+    type: 'ClientRegistered',
+    time: new Date().toISOString(),
+    desc: `${user.nickname} registered to the chat.`,
+    user,
+  };
+}
+
 function clientConnected(nickname) {
   return {
     type: 'ClientConnected',
@@ -55,6 +64,7 @@ function serverRebooted() {
 }
 
 module.exports = {
+  clientRegistered,
   clientConnected,
   clientDisconnected,
   clientInactivated,
