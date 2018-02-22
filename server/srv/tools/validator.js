@@ -3,6 +3,7 @@
 
 const Ajv = require('ajv');
 const config = require('../config');
+const errors = require('../entity/errors');
 
 const pwd = config.get('app:pwd');
 const ajv = new Ajv({
@@ -33,6 +34,9 @@ function checkMeta(message) {
 
 function checkData(data) {
   const validateData = ajv.getSchema(`/schema/v1/payloads/${data.type}.schema.json`);
+  if (!validateData) {
+    throw new errors.ServerError(`Unknown JSON-schema file name = '${data.type}'`);
+  }
   return validateData(data) ? validateData.errors : undefined;
 }
 
