@@ -15,19 +15,20 @@ module.exports = {
     return this._users.forEach(callback);
   },
 
-  // todo: extract from here
-  broadcast(message) {
-    const encodedMessage = converter.encode(message);
+  // todo: extract from here, maybe to transport.js?
+  broadcast(data) {
+    const message = converter.encode(data);
+
     if (config.get('app:validateOutput')) {
-      const errors = validator.check(encodedMessage);
+      const errors = validator.checkData(data);
       if (errors) {
-        return logger.messageMalformed(encodedMessage);
+        return logger.messageMalformed(message);
       }
     }
 
     this._users.forEach((user) => {
       if (user.socket && user.socket.readyState === WebSocket.OPEN) {
-        user.socket.send(encodedMessage);
+        user.socket.send(message);
       }
     });
     logger.messageBroadcasted(message);

@@ -1,1 +1,6 @@
-{}
+{
+  "type": "ClientConnected",
+  "time": "2018-02-22T10:28:07.726Z",
+  "text": "111 joined the chat.",
+  "nickname": "111"
+}

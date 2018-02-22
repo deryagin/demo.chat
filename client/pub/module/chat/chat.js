@@ -57,7 +57,7 @@
 
       ws.onmessage = function onMessage(event) {
         console.log('message', event);
-        var message = JSON.parse(event.data);
+        var message = decode(event.data);
 
         // todo: message validation
         if (message) {
@@ -94,10 +94,11 @@
       console.log('sendMessage');
       $scope.typedText = $scope.typedText.trim();
       if ($scope.typedText) {
-        ws.send(JSON.stringify({
-          entity: 'message',
+        var message = {
+          type: 'ChatMessage',
           text: $scope.typedText
-        }));
+        };
+        ws.send(encode(message, $rootScope.user.id));
         $scope.typedText= '';
       }
       return false;
@@ -111,6 +112,28 @@
       $rootScope.user = undefined;
       $location.path('/login');
     }
+
+    function encode(data, userId) {
+      var message = {
+        data: data,
+        meta: {
+          version: 'v1',
+          auth: userId ? {userId: userId} : undefined,
+        },
+      };
+      return JSON.stringify(message);
+    }
+
+    function decode(json) {
+      try {
+        var message = JSON.parse(json);
+        return message.data;
+      } catch (exp) {
+        var errorMessage = exp.message || 'Malformed JSON message.';
+        return {errors: [{message: errorMessage}]};
+      }
+    }
+
   }
 
 })(angular);

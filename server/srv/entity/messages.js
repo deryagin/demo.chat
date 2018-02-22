@@ -10,15 +10,6 @@ function clientConnected(nickname) {
   };
 }
 
-function chatMessage(text, nickname) {
-  return {
-    type: 'ChatMessage',
-    time: new Date().toISOString(),
-    text,
-    nickname,
-  };
-}
-
 function clientDisconnected(nickname) {
   return {
     type: 'ClientDisconnected',
@@ -42,6 +33,15 @@ function clientGone(nickname) {
     type: 'ClientGone',
     time: new Date().toISOString(),
     text: `${nickname} left the chat, connection lost.`,
+    nickname,
+  };
+}
+
+function chatMessage(text, nickname) {
+  return {
+    type: 'ChatMessage',
+    time: new Date().toISOString(),
+    text,
     nickname,
   };
 }

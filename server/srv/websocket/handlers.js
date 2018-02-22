@@ -1,3 +1,4 @@
+const url = require('url');
 const users = require('../entity/users');
 const messages = require('../entity/messages');
 const converter = require('../tools/converter');
@@ -31,19 +32,20 @@ function onConnection(ws, req) {
 }
 
 function onMessage(user, json) {
-  const message = converter.decode(json);
-  if (message.errors) {
+  const data = converter.decode(json);
+  if (data.errors) {
     // user.socket.send({ }); // json errors
     return logger.messageMalformed(json);
   }
 
-  const errors = validator.check(message);
+  const errors = validator.checkData(data);
   if (errors) {
     // user.socket.send({ }); // protocol errors
     return logger.messageMalformed(json);
   }
 
-  users.broadcast(message.text, user.nickname);
+  const message = messages.chatMessage(data.text, user.nickname);
+  users.broadcast(message);
   user.lastActivityAt = new Date();
 }
 
@@ -54,14 +56,14 @@ function onClose(user, closeCode) {
   if (closeCode === WSClose.NORMAL.CODE) {
     const message = messages.clientDisconnected(user.nickname);
     users.broadcast(message);
-    logger.clientDisconnected(user.public());
+    return logger.clientDisconnected(user.public());
   }
 
   // a user was disconnected by the server
   if (closeCode === WSClose.DUE_USER_INACTIVITY.CODE) {
     const message = messages.clientInactivated(user.nickname)
     users.broadcast(message);
-    logger.clientInactivated(user.public());
+    return logger.clientInactivated(user.public());
   }
 
   // a user closed a browser and such

@@ -1,4 +1,4 @@
-// this module checks messages (incomming and outcomming)
+// this module checks messages (incoming and outcoming)
 // using json-schemas from pub/schema/v1/
 
 const Ajv = require('ajv');
@@ -17,24 +17,27 @@ const ajv = new Ajv({
     require(`${pwd}/pub/schema/v1/payloads/LoginResponse.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/ClientConnected.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/ClientDisconnected.schema.json`),
+    require(`${pwd}/pub/schema/v1/payloads/ClientGone.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/ChatMessage.schema.json`),
   ]
 });
 
-function check(message) {
-  const validateRoot = ajv.getSchema('/schema/v1/chat.schema.json');
-  validateRoot(message);
-  if (validateRoot.errors) {
-    return validateRoot.errors;
-  }
+function checkFull(message) {
+  return checkMeta(message) || checkData(message.data);
+}
 
-  const validateData = ajv.getSchema(`/schema/v1/payloads/${message.data.type}.schema.json`);
-  validateData(message.data);
-  if (validateData.errors) {
-    return validateData.errors;
-  }
-};
+function checkMeta(message) {
+  const validateMeta = ajv.getSchema('/schema/v1/chat.schema.json');
+  return validateMeta(message) ? validateMeta.errors : undefined;
+}
+
+function checkData(data) {
+  const validateData = ajv.getSchema(`/schema/v1/payloads/${data.type}.schema.json`);
+  return validateData(data) ? validateData.errors : undefined;
+}
 
 module.exports = {
-  check,
+  checkFull,
+  checkMeta,
+  checkData,
 };

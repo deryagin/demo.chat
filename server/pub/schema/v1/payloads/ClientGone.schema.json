@@ -1,0 +1,12 @@
+{
+  "$id": "/schema/v1/payloads/ClientGone.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "ClientGone message schema.",
+  "type": "object",
+  "required": ["type", "nickname"],
+  "properties": {
+    "type": {"type": "string", "const": "ClientGone"},
+    "nickname": {"type": "string", "minLength": 1},
+    "text": {"type": "string"}
+  }
+}

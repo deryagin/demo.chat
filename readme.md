@@ -35,4 +35,4 @@ Todo:
 [ ] Рефакторинг + Project's checklist, удалить debug-code.
 [ ] Добавить autoscroll + убрать вертикальную и горизонтальную полосы прокрутки.
 [ ] Добавить в server/Makefile для make prod.start запуск через pm2/forever.
-[ ] How to reduce the number of the payload/* files?
+[ ] How to reduce the number of the payload/* files? And how to use one phase validation in validator.js?
