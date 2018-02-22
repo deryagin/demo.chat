@@ -20,15 +20,6 @@ function gracefully(httpServer) {
   };
 }
 
-function emergency(httpServer) {
-  return function onUncaughtException(error) {
-    const shutdown = gracefully(httpServer);
-    logger.uncaughtException(error);
-    shutdown();
-  };
-}
-
 module.exports = {
   gracefully,
-  emergency,
 };

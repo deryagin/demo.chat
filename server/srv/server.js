@@ -8,7 +8,7 @@ const app = require('./app');
 const httpServer = http.createServer(app);
 const wsServer = websocket.createServer(httpServer);
 
-process.once('uncaughtException', shutdown.emergency(httpServer));
+process.once('uncaughtException', logger.uncaughtException);
 process.once('SIGTERM', shutdown.gracefully(httpServer));
 process.once('SIGINT', shutdown.gracefully(httpServer));
 
