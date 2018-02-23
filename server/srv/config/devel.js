@@ -13,11 +13,11 @@ module.exports = {
     maxPayload: 2048,
   },
   checkAlive: {
-    interval: 60 * 1000, // 60 seconds
+    interval: 60 * 1000, // milisec
   },
   checkInactivity: {
-    timeout: 10 * 60 * 1000, // 10 minutes
-    interval: 30 * 1000, // 30 seconds
+    timeout: 30 * 1000, // milisec
+    interval: 10 * 1000, // milisec
   },
   bunyan: {
     name: 'Chat.Interview.Test',

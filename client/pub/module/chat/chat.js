@@ -7,7 +7,7 @@
 
     console.log('chatcontroller');
 
-    var CLOSE_DUE_INACTIVITY_MESSAGE = 'Connection was closed due to inactivity';
+    var CLOSE_DUE_INACTIVITY_MESSAGE = 'Disconnected by the server due to inactivity.';
 
     var SERVER_UNAVAILABLE_MESSAGE = 'Chat server is unavailable';
 

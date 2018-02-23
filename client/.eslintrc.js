@@ -13,6 +13,7 @@ module.exports = {
     'consistent-return': ['off'],
     'indent': ['error', 2, {'SwitchCase': 1}],
     'max-len': ['error', {'ignoreUrls': true, 'code': 120}],
+    'no-console': ['warn'],
     'no-shadow': ['off'],
     'no-undef': ['warn'],
     'no-underscore-dangle': ["error", {"allowAfterThis": true}],

@@ -32,7 +32,7 @@ function clientInactivated(nickname) {
   return {
     type: 'ClientInactivated',
     time: new Date().toISOString(),
-    text: `${nickname} was disconnected due to inactivity.`,
+    text: `${nickname} was disconnected by the server due to inactivity.`,
     nickname,
   };
 }

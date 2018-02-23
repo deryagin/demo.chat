@@ -31,9 +31,11 @@ Here will be node js developer test task. The task is to create a chat client an
 4. Doesn't allow multiple users with the same nickname.
 5. Validates data received over the network.
 6. Has logging.
-7. Add opportunity to give a config file using cli options (e.g. node ./server.js --config=cfg/devel.js).
-8. Terminates gracefully upon receiving SIGINT or SIGTERM signals.
-9. Technology stack: Node.js (https://nodejs.org/dist/latestv6.x/docs/api/), ws (https://github.com/websockets/ws), Bunyan (https://github.com/trentm/nodebunyan), JSHint (copytheattached.jshintrcfileinto project root).
+7. Terminates gracefully upon receiving SIGINT or SIGTERM signals.
+8. Technology stack:
+    - Node.js (https://nodejs.org/dist/latestv6.x/docs/api/),
+    - WebSockets (https://github.com/websockets/ws),
+    - Bunyan (https://github.com/trentm/nodebunyan).
 
 ## Client
 1. Has two pages landing page (shown when not connected to the server) and chat (shown only when connected to the server).
@@ -42,7 +44,9 @@ Here will be node js developer test task. The task is to create a chat client an
 4. Chat page displays messages from the server together with the sender's nickname (but no messages from before the user's current session started), a box to enter a message, a button to send it, and a button to disconnect from the server.
 5. Does not have any inactivity timeouts.
 6. Should display landing page if it's disconnected from the server.
-7. Technology stack: builtin WebSocket API (https://developer.mozilla.org/enUS/docs/Web/API/WebSocket), AngularJS (https://docs.angularjs.org/guide), JSHint (takesomeoneelse's.jshintrc).
+7. Technology stack:
+    - Builtin WebSocket API   (https://developer.mozilla.org/enUS/docs/Web/API/WebSocket),
+    - AngularJS (https://docs.angularjs.org/guide).
 
 Todo:
 [x] Без username + страница чата + простая рассылка сообшений.
@@ -52,7 +56,7 @@ Todo:
 [x] Логирование
 [x] Логика реконнекта на клиенте и на сервере.
 [x] Обработка SIGINT or SIGTERM
-[ ] Валидация сообщений.
+[x] Валидация сообщений.
 [ ] Рефакторинг + Project's checklist, удалить debug-code.
 [ ] Добавить autoscroll + убрать вертикальную и горизонтальную полосы прокрутки.
 [ ] Добавить в server/Makefile для make prod.start запуск через pm2/forever.

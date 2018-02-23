@@ -10,6 +10,7 @@ const ajv = new Ajv({
   allErrors: true,
   format: 'full',
   schemas: [
+    /* eslint-disable */
     require(`${pwd}/pub/schema/v1/chat.schema.json`),
     require(`${pwd}/pub/schema/v1/sections/data.schema.json`),
     require(`${pwd}/pub/schema/v1/sections/meta.schema.json`),
@@ -20,6 +21,7 @@ const ajv = new Ajv({
     require(`${pwd}/pub/schema/v1/payloads/ClientDisconnected.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/ClientGone.schema.json`),
     require(`${pwd}/pub/schema/v1/payloads/ChatMessage.schema.json`),
+    /* eslint-enable */
   ],
 });
 
